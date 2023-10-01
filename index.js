@@ -8,7 +8,7 @@ const app = express();
 const env = require('node-env-file'); // .env file
 env(__dirname + '/.env');
 
-require('./database');
+require('./src/database');
 
 
 
@@ -43,4 +43,4 @@ app.use(express.json());
 app.use(require('cors')());
 
 //routes
-app.use('/api', require('./routes/index'));
+app.use('/api', require('./src/routes/index'));
