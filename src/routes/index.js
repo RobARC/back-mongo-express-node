@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const db = 'Productos';
 
 //OBTENER PRODUCTOS
-
 router.get('/', async (req, res) => {
     const mostrar = async () =>{
         const productos = await Producto.find({})
@@ -44,7 +43,7 @@ router.post('/productos', async (req, res) => {
         precio, 
         stock,
     });
-   console.log(newProducto);
+   //console.log(newProducto);
     await newProducto.save();
     res.send('Productos');
 })
@@ -54,7 +53,6 @@ router.put('/producto/:id', async (req, res) => {
     const productoId = req.params.id;
     const producto = async (productoId) => {
         const producto = await Producto.findByIdAndUpdate({_id: productoId});
-        console.log(producto);
         producto.nombre= req.body.nombre ;
         producto.descripcion= req.body.descripcion ;
         producto.sku= req.body.sku;
