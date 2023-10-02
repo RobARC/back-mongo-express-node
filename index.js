@@ -10,8 +10,6 @@ env(__dirname + '/.env');
 
 require('./src/database');
 
-
-
 //settings
 app.set('port', process.env.PORT || 4000);
 
@@ -30,7 +28,6 @@ app.get('/', (req, res) => {
         `
     res.send(htmlResponse);   
 });
-
 
 app.listen(app.get('port'));
 console.log('Server on port ', app.get('port'));

@@ -1,12 +1,67 @@
 const { Router } = require('express');
 const router = Router();
 const Producto = require('../model/Producto');
+const UserInfo = require('../model/UserInfo');
+const Usuario = require('../model/Usuario');
 const mongoose = require('mongoose');
 
 const db = 'Productos';
 
+const jwt = require('jsonwebtoken');
+
+//CREAR UNA CUENTA
+router.post('/Create', async (req, res) => {
+    const { nombre,
+        userName,
+        email,
+        password,
+        rol, 
+        } = req.body;
+
+        const newUser = new Usuario({
+            userName, 
+            email, 
+            password,
+             rol});
+        await newUser.save();     
+
+        const token = jwt.sign({_id: newUser._id}, 'ninjaSecret');
+        res.status(200).json(token);
+});
+
+//LOGIN
+router.post('/Login', async (req, res) => {
+    const mostrar = async () =>{
+        const { email,
+            password,
+            rol
+        } = req.body;
+
+        console.log(req.body);
+
+        const newUserInfo = Usuario({
+            email, 
+            password,
+            rol
+            });
+       
+        //recuperamos el registro
+        const userInfo = await Usuario.findOne({email})
+      
+        //validaciones simples (Hace falta encriptarlas)
+        if(!userInfo.email) return res.status(401).send("El email no exite");
+        if(userInfo.password !== password) return res.status(401).send("El password no coincide")
+        //Obtenemos el rol
+        this.rol = userInfo.rol;
+        //Generamos el token
+        const token =jwt.sign({_id: userInfo._id}, 'ninjaSecret');
+        res.status(200).json( {token: token, rol: this.rol} );
+    }
+    mostrar();
+});
+
 //OBTENER PRODUCTOS
-router.get('/', async (req, res) => {
+router.get('/productos', async (req, res) => {
     const mostrar = async () =>{
         const productos = await Producto.find({})
         res.send(productos);

@@ -1,13 +1,12 @@
 require('dotenv').config();
 const { Producto } = require('./model/Producto');
-const { Schema, model, connect} = require('mongoose')
-const { MongoClient, ServerApiVersion } = require('mongodb'); 
+const { Schema, model, connect} = require('mongoose') 
 
 
 const uri = process.env.DB_URI_LOCAL;
 //const uri2 = process.env.DB_URI;
 
-//console.log(uri);
+console.log(uri);
 
 connect(uri)
 
